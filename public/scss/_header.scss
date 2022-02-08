@@ -1,0 +1,21 @@
+.header {
+   flex-grow: 10;
+   position: relative;
+   display: flex;
+   align-items: center;
+   padding: 0 $main-spacing-x;
+   // border-radius: $main-radius $main-radius 0 0;
+   overflow: hidden;
+   color: $white-color;
+
+   .header__header-box {}
+
+   .header__header {
+      font-size: 3.5rem;
+   }
+
+   .header__sub-header {
+      font-size: 1.4rem;
+      color: darken($white-color, 15%);
+   }
+}
