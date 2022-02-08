@@ -1,0 +1,15 @@
+{
+  "name": "quiz",
+  "version": "1.0.0",
+  "description": "Very nice Quiz game created by JohnKot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "JohnKot",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
