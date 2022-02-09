@@ -1,0 +1,17 @@
+[
+   {
+      "question": "Dwa najpyszniejsze zwierzaczki na świecie:",
+      "answers": ["Puchaty i Pacyna", "Dzik i sosna", "Struś i kuropatwa", "Lama i szop"],
+      "correctAnswer": 0
+   },
+   {
+      "question": "Najlepszy język programowania na świecie:",
+      "answers": ["C++", "Phyton", "JavaScript", "Java"],
+      "correctAnswer": 2
+   },
+   {
+      "question": "Przyprawa, której należy użyć, kiedy zupa jest zła:",
+      "answers": ["Sól", "Pieprz", "Majeranek", "Szczypta wiewiórczych odchodów"],
+      "correctAnswer": 3
+   }
+]
