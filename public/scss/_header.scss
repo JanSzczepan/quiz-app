@@ -5,7 +5,6 @@
    justify-content: space-between;
    align-items: center;
    padding: 40px $main-spacing-x / 2;
-   // border-radius: $main-radius $main-radius 0 0;
    overflow: hidden;
    background-color: transparent;
    color: $white-color;
@@ -21,10 +20,18 @@
          @media(min-width: 300px) {
             font-size: 3.5rem;
          }
+
+         @media(min-width: 576px) {
+            font-size: 4rem;
+         }
       }
       .header__sub-header {
          font-size: 1.4rem;
          color: darken($white-color, 15%);
+
+         @media(min-width: 576px) {
+            font-size: 1.6rem;
+         }
       }
    }
 
@@ -34,6 +41,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      @media(min-width: 576px) {
+         width: 100px;
+      }
 
       .header__logo-img {
          width: 100%;
