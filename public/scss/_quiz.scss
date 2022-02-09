@@ -1,13 +1,24 @@
 .quiz {
-   flex-grow: 4;
-   margin: 0 $main-spacing-x;
+   flex-grow: 1;
+   // display: flex;
+   // flex-direction: column;
+   // justify-content: center;
+   margin: 0 $main-spacing-x / 2;
    padding: 0 ($main-spacing-x * 0.75);
    background-color: $white-color;
    border-radius: $main-radius;
    color: $text-color;
+   overflow-y: auto;
+   -webkit-box-shadow: 0px 0px 50px -11px rgba(138, 138, 138, 1);
+   -moz-box-shadow: 0px 0px 50px -11px rgba(138, 138, 138, 1);
+   box-shadow: 0px 0px 50px -11px rgba(138, 138, 138, 1);
+
+   @media(min-width: 300px) {
+      margin: 0 $main-spacing-x;
+   }
 
    .quiz__header-box {
-      display: flex;
+      display: none;
       justify-content: space-evenly;
       align-items: center;
       padding: 20px 15px;
@@ -21,6 +32,7 @@
    .quiz__question-box {
 
       .quiz__question-number {
+         margin-top: 20px;
          margin-bottom: 5px;
          font-size: 1.6rem;
          font-weight: 600;
@@ -49,21 +61,42 @@
          font-size: 2rem;
          list-style: none;
          border-radius: $main-radius * 0.75;
+         transition: background-color .3s ease-in-out;
 
          &:hover {
             cursor: pointer;
-            background-color: $second-color;
-            color: $white-color;
+            // background-color: $second-color;
+            // color: $white-color;
+            // -webkit-box-shadow: 0px 10px 26px -10px rgba(138, 138, 138, 1);
+            // -moz-box-shadow: 0px 10px 26px -10px rgba(138, 138, 138, 1);
+            // box-shadow: 0px 10px 26px -10px rgba(138, 138, 138, 1);
          }
 
          .quiz__aswer-icon {
             margin: 0 20px;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
          }
 
          .quiz__answer-text {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 600;
+         }
+      }
+
+      .quiz__aswer-submit {
+         width: 100%;
+         margin: 10px 0 25px;
+         padding: 20px 10px;
+         border: none;
+         background-color: $second-color;
+         font-size: 2rem;
+         color: $white-color;
+         border-radius: $main-radius * 0.75;
+         cursor: pointer;
+         transition: background-color .3s ease-in-out;
+
+         &:hover {
+            background-color: darken($second-color, 15%);
          }
       }
    }

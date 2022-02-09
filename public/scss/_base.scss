@@ -5,14 +5,29 @@ html {
 body {
    font-size: 1.6rem;
    font-family: 'Nunito', sans-serif;
+   position: relative;
+   z-index: -3;
 }
 
 .container {
-   height: 100vh;
+   height: 100%;
    display: flex;
    justify-content: center;
-   align-items: center;
+   // align-items: center;
    // padding: 0 10%;
+
+   @media(min-width: 576px) {
+      padding: 50px;
+      background-color: $bg-main-color;
+      position: relative;
+      z-index: -2;
+
+      @media(min-height: 950px) {
+         align-items: center;
+         height: 100vh;
+         padding: 0 10%;
+      }
+   }
 }
 
 .main {
@@ -26,6 +41,18 @@ body {
    flex-direction: column;
    // border-radius: $main-radius * 2;
    //box-shadow - pamiętać
+   background-color: transparent;
+
+   @media(min-width: 576px) {
+      height: 80%;
+      min-height: 850px;
+      max-width: 500px;
+      // aspect-ratio: 3/4;
+      -webkit-box-shadow: 10px 10px 70px -2px rgba(167, 167, 167, 1);
+      -moz-box-shadow: 10px 10px 70px -2px rgba(167, 167, 167, 1);
+      box-shadow: 10px 10px 70px -2px rgba(167, 167, 167, 1);
+      border-radius: $main-radius $main-radius;
+   }
 
    .main__bg-container {
       position: absolute;
@@ -36,14 +63,47 @@ body {
       display: flex;
       flex-direction: column;
       z-index: -1;
+      background-color: transparent;
 
       .--main__bg-top {
          flex-grow: 1;
          background-color: $bg-color-top;
+
+         @media(min-width: 576px) {
+            border-radius: $main-radius $main-radius 0 0;
+         }
       }
       .--main__bg-bottom {
          flex-grow: 2;
          background-color: $bg-color-bottom;
+
+         @media(min-width: 576px) {
+            border-radius: 0 0 $main-radius $main-radius;
+         }
       }
    }
 }
+
+
+
+
+ /* width */
+ ::-webkit-scrollbar {
+   width: 10px;
+ }
+ 
+ /* Track */
+ ::-webkit-scrollbar-track {
+   background: transparent;
+   margin: 100px 0;
+ }
+ 
+ /* Handle */
+ ::-webkit-scrollbar-thumb {
+   background: darken($icon-color, 25%);
+ }
+ 
+ /* Handle on hover */
+ ::-webkit-scrollbar-thumb:hover {
+   background: darken($icon-color, 10%);
+ } 
