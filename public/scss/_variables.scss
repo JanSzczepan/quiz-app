@@ -12,3 +12,18 @@ $main-spacing-x: 40px;
 $test-color: rgb(65, 65, 65);
 
 $main-radius: 12px;
+
+
+%btn {
+   border: none;
+   background-color: $second-color;
+   font-size: 2rem;
+   color: $white-color;
+   border-radius: $main-radius * 0.75;
+   cursor: pointer;
+   transition: background-color .3s ease-in-out;
+
+   &:hover {
+      background-color: darken($second-color, 15%);
+   }
+}
