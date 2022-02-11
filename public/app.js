@@ -197,6 +197,7 @@ const handleFriendFedback = (data) => {
    friendIcon.classList.add('aside__icon--used');
 }
 
+//funkcja, która obsługuje odpowiedź publiczności  od serwera
 const handlePublicFedback = (data) => {
 
 }

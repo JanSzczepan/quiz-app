@@ -92,15 +92,41 @@ function gameRoutes(app) {
    });
 
    app.get("/help/public", (req, res) => {
-      if(isPublicQuestioned) {
-         return res.json({"text": "Zapytałeś już publiczności..."})
+      // if(isPublicQuestioned) {
+      //    return res.json({"text": "Zapytałeś już publiczności..."})
+      // }
+      // isPublicQuestioned = true;
+
+      let votes = [];
+      const a = 10;
+      const n = answersArr[currentQuestion].answers.length;
+
+      if(n > 1) {
+         const r = (2 * 100) / ((n - 1) * n) - (2 * a) / (n - 1);
+         
+         for(let i = 0; i < n; i++) {
+            votes.push(Math.round(a + i * r));
+         }
+      } else if(n === 1) {
+         votes.push(100);
       }
+      console.log(votes);
 
-      isPublicQuestioned = true;
+      for(let i = votes.length - 1; i > 0; i--) {
+         const number = Math.floor(Math.random() * 20 - 10);
 
-      // const correctAnswer = answersArr[currentQuestion].correctAnswer;
+         votes[i] += number;
+         votes[i - 1] -= number;
+      }
+      console.log(votes);
 
-      // res.json({friendAnswer});
+      const question = answersArr[currentQuestion];
+      const {correctAnswer} = question;
+  
+      [votes[n - 1], votes[correctAnswer]] = [votes[correctAnswer], votes[n - 1]]; 
+      console.log(votes);
+
+      res.json({votes});
    });
 
    app.get("/help/fifty", (req, res) => {
