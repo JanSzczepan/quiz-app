@@ -28,6 +28,7 @@ let activeAnswer = {
 };
 
 let areHelpBtnsBlocked = false;
+let isHelpUsed = false;
 
 //funckaj, która zdejmuje style z zaznaczonych odpowiedzi
 const removeAnswerBoxElsStyle = (next=false) => {
@@ -35,6 +36,7 @@ const removeAnswerBoxElsStyle = (next=false) => {
    const activeIcon = 'fa-dot-circle';
    const icon = 'fa-circle';
    const phoneIcon = 'fa-mobile-alt';
+   const fiftyIcon = 'fa-star-half-alt';
 
    answerBoxEls.forEach((boxEl, index) => {
       if(boxEl.classList.contains(activeClass)) {
@@ -42,6 +44,10 @@ const removeAnswerBoxElsStyle = (next=false) => {
       } 
       if(next && answerIconEls[index].classList.contains(phoneIcon)) {
          answerIconEls[index].classList.remove('fas', phoneIcon);
+         answerIconEls[index].classList.add('far', icon);
+      }
+      if(next && answerIconEls[index].classList.contains(fiftyIcon)) {
+         answerIconEls[index].classList.remove('fas', fiftyIcon);
          answerIconEls[index].classList.add('far', icon);
       }
       if(answerIconEls[index].classList.contains(activeIcon)) {
@@ -59,11 +65,13 @@ const styleClickedAnswer = () => {
          const activeIcon = 'fa-dot-circle';
          const icon = 'fa-circle';
          const phoneIcon = 'fa-mobile-alt';
+         const fiftyIcon = 'fa-star-half-alt';
          
          removeAnswerBoxElsStyle();
 
          answerBoxEl.classList.add(activeClass);
-         if(!answerIconEls[index].classList.contains(phoneIcon)) {
+         if(!answerIconEls[index].classList.contains(phoneIcon) && 
+            !answerIconEls[index].classList.contains(fiftyIcon)) {
             answerIconEls[index].classList.remove(icon);
             answerIconEls[index].classList.add(activeIcon);
          }
@@ -134,6 +142,7 @@ const handleSumbitBtn = () => {
          removeAnswerBoxElsStyle(true);
          sendAnswer(activeAnswer.indexValue);
          activeAnswer.indexValue = null;
+         isHelpUsed = false;
       }
    });
 }
@@ -142,6 +151,9 @@ const handleSumbitBtn = () => {
 const resetGame = () => {
    if(friendIcon.classList.contains('aside__icon--used')) {
       friendIcon.classList.remove('aside__icon--used');
+   }
+   if(fiftyFiftyIcon.classList.contains('aside__icon--used')) {
+      fiftyFiftyIcon.classList.remove('aside__icon--used');
    }
 
    winQuiz.style.display = 'none';
@@ -162,10 +174,12 @@ const handleResetBtns = () => {
    })
 }
 
+//funkcja, która obsługuje odpowiedź przyjaciela od serwera
 const handleFriendFedback = (data) => {
    if(!data.friendAnswer && data.friendAnswer !== 0) {
       return;
    }
+   isHelpUsed = true;
 
    const activeIcon = 'fa-dot-circle';
    const icon = 'fa-circle';
@@ -183,8 +197,37 @@ const handleFriendFedback = (data) => {
    friendIcon.classList.add('aside__icon--used');
 }
 
+const handlePublicFedback = (data) => {
+
+}
+
+//funkcja, która obsługuje odpowiedź fifty-fifty od serwera
+const handleFiftyFedback = (data) => {
+   if(!data.fiftyAnswer) {
+      return;
+   }
+   isHelpUsed = true;
+
+   const activeIcon = 'fa-dot-circle';
+   const icon = 'fa-circle';
+   const fiftyIcon = 'fa-star-half-alt';
+
+   data.fiftyAnswer.forEach(answer => {
+      if(answerIconEls[answer].classList.contains(icon)) {
+         answerIconEls[answer].classList.remove('far', icon)
+      } else if(answerIconEls[answer].classList.contains(activeIcon)) {
+         answerIconEls[answer].classList.remove('far', activeIcon)
+      }
+
+      answerIconEls[answer].classList.add('fas', fiftyIcon);
+   })
+
+   fiftyFiftyIcon.classList.add('aside__icon--used');
+}
+
+//funkcja, która wysyła rządanie do serwera o poprawną odpowiedź przyjaciela
 const askFriend = () => {
-   if(areHelpBtnsBlocked) return;
+   if(areHelpBtnsBlocked || isHelpUsed) return;
 
    fetch('/help/friend', {method: 'GET'})
       .then(response => response.json())
@@ -194,10 +237,41 @@ const askFriend = () => {
       })
 }
 
+//funkcja, która wysyła rządanie do serwera o odpowiedź publiczności
+const askPublic = () => {
+   if(areHelpBtnsBlocked || isHelpUsed) return;
+
+   fetch('/help/public', {method: 'GET'})
+      .then(response => response.json())
+      .then(data => {
+         console.log(data)
+         handlePublicFedback(data);
+      })
+}
+
+//funkcja, która wysyła rządanie do serwera o odpowiedź fiftyFifty
+const fiftyFifty = () => {
+   if(areHelpBtnsBlocked || isHelpUsed) return;
+
+   fetch('/help/fifty', {method: 'GET'})
+      .then(response => response.json())
+      .then(data => {
+         console.log(data)
+         handleFiftyFedback(data);
+      })
+}
+
+//funkcja, która dodaje nasłuchy na btns w aside
 const handleAsideBtns = () => {
    friendBtn.addEventListener('click', () => {
       askFriend();
-   })
+   });
+   publicBtn.addEventListener('click', () => {
+      askPublic();
+   });
+   fiftyFiftyBtn.addEventListener('click', () => {
+      fiftyFifty();
+   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

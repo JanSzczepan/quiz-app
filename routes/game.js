@@ -85,9 +85,44 @@ function gameRoutes(app) {
 
       isFriendCalled = true;
 
-      const friendAnswer = answersArr[currentQuestion].correctAnswer;
+      const question = answersArr[currentQuestion];
+      const friendAnswer = question.correctAnswer;
 
       res.json({friendAnswer});
+   });
+
+   app.get("/help/public", (req, res) => {
+      if(isPublicQuestioned) {
+         return res.json({"text": "Zapytałeś już publiczności..."})
+      }
+
+      isPublicQuestioned = true;
+
+      // const correctAnswer = answersArr[currentQuestion].correctAnswer;
+
+      // res.json({friendAnswer});
+   });
+
+   app.get("/help/fifty", (req, res) => {
+      if(isFiftyFifty) {
+         return res.json({"text": "Wykorzystałeś już szansę fifty-fifty..."})
+      }
+
+      isFiftyFifty = true;
+
+      const question = answersArr[currentQuestion];
+
+      const fiftyAnswer = [question.correctAnswer];
+
+      while(fiftyAnswer.length < 2) {
+         const number = Math.floor(Math.random() * question.answers.length);
+
+         if(number !== question.correctAnswer) {
+            fiftyAnswer.push(number)
+         }
+      }
+
+      res.json({fiftyAnswer});
    });
 }
 
