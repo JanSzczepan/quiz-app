@@ -18,14 +18,36 @@
    align-items: center;
    justify-content: space-evenly;
 
+   .aside__btn {
+      flex-grow: 1;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      outline: none;
+   }
+
    .aside__icon {
-      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
       font-size: 2.2rem;
       color: darken($icon-color, 25%);
 
       &:hover {
          cursor: pointer;
          color: $second-color;
+      }
+   }
+
+   .aside__icon--used {
+      color: $warning-color;
+
+      &:hover {
+         cursor: default;
+         color: $warning-color;
       }
    }
 }

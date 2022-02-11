@@ -7,9 +7,9 @@ function gameRoutes(app) {
    //ważne dane rzekomo powinny być zapisywane na back-end
    let currentQuestion = 0;
    let goodAnswers = 0;
-   const isFriendCalled = false;
-   const isPublicQuestioned = false;
-   const isFiftyFifty = false;
+   let isFriendCalled = false;
+   let isPublicQuestioned = false;
+   let isFiftyFifty = false;
    //pobieramy pytania z pliku json
    let rawData = fs.readFileSync(path.join(__dirname, "/data/questions.json"));
    const answersArr = JSON.parse(rawData);
@@ -23,6 +23,9 @@ function gameRoutes(app) {
          goodAnswers = 0;
          isGameOver = false;
          //friendy itp. teź prolly na false
+         isFriendCalled = false;
+         isPublicQuestioned = false;
+         isFiftyFifty = false;
       }
 
       if (currentQuestion === answersArr.length) {
@@ -51,7 +54,7 @@ function gameRoutes(app) {
    });
 
    //odbieramy informację o indeksie odpowiedzi użytkownika i zwracamy informację o jej poprawności (true albo false)
-   app.post('/answer/:index', (req, res) => {
+   app.post("/answer/:index", (req, res) => {
       if(isGameOver) {
          res.json({
             loser: true
@@ -73,6 +76,18 @@ function gameRoutes(app) {
       res.json({
          isAnswerCorrect
       })
+   });
+
+   app.get("/help/friend", (req, res) => {
+      if(isFriendCalled) {
+         return res.json({"text": "Zadzwoniłeś już do przyjaciela..."})
+      }
+
+      isFriendCalled = true;
+
+      const friendAnswer = answersArr[currentQuestion].correctAnswer;
+
+      res.json({friendAnswer});
    });
 }
 
