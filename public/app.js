@@ -21,6 +21,7 @@ let activeAnswer = {
    }
 };
 
+//funckaj, która zdejmuje style z zaznaczonych odpowiedzi
 const removeAnswerBoxElsStyle = () => {
    const activeClass = 'quiz__answer-item--active';
    const activeIcon = 'fa-dot-circle';
@@ -66,11 +67,13 @@ const fillElements = (data) => {
    });
 }
 
+//funkcja, która obsługuje zdarzenia po wygranej
 const handleWinner = (data) => {
    gameQuiz.style.display = 'none';
    winQuiz.style.display = 'flex';
 }
 
+//funkcja, która obsługuje zdarzenia po przegranej
 const handleLoser = (data) => {
    gameQuiz.style.display = 'none';
 
@@ -78,7 +81,7 @@ const handleLoser = (data) => {
    lostQuiz.style.display = 'flex';
 }
 
-//funkcja, która strzela do serwera prosząc o question and aswers data
+//funkcja, która strzela do serwera prosząc o question, aswers data oraz info o ewentualnej wygranej lub przegranej
 const showNextQuestion = () => {
    fetch('/question', {method: 'GET'})
       .then(response => response.json())
@@ -93,6 +96,7 @@ const showNextQuestion = () => {
       })
 }
 
+//funkcja, która obsługuje zdarzenia po otrzymaniu odpowiedzi od serwera
 const handleAnswerFedback = (data) => {
    showNextQuestion();
 }
@@ -104,6 +108,7 @@ const sendAnswer = (answerIndex) => {
       .then(data => handleAnswerFedback(data))
 }
 
+//funkcja, która odpowiada za zdarzenia po naciśnięciu submit btn
 const handleSumbitBtn = () => {
    submitBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -112,6 +117,7 @@ const handleSumbitBtn = () => {
    });
 }
 
+//funkcja, która odpowiada za restart gry
 const resetGame = () => {
    winQuiz.style.display = 'none';
    lostQuiz.style.display = 'none';
@@ -120,6 +126,7 @@ const resetGame = () => {
    showNextQuestion();
 }
 
+//funkcja, która daje listenery na restert btns
 const handleResetBtns = () => {
    resetBtns.forEach(resetBtn => {
       resetBtn.addEventListener('click', () => {
