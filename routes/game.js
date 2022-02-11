@@ -18,14 +18,25 @@ function gameRoutes(app) {
 
    //wysyłamy kolejne pytanie i przydatne informacje
    app.get("/question", (req, res) => {
+      const resetValues = () => {
+         currentQuestion = 0;
+         goodAnswers = 0;
+         isGameOver = false;
+         //friendy itp. teź prolly na false
+      }
+
       if (currentQuestion === answersArr.length) {
          res.json({
             winner: true
          });
+         resetValues();
       } else if(isGameOver) {
          res.json({
-            loser: true
+            loser: true,
+            goodAnswers,
+            amountOfQuestions
          })
+         resetValues();
       } else {
          const nextQuestion = answersArr[currentQuestion];
          const {question, answers} = nextQuestion;
