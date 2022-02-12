@@ -310,9 +310,9 @@ body {
 }
 
 .quiz {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  -webkit-box-flex: 10;
+      -ms-flex-positive: 10;
+          flex-grow: 10;
   margin: 0 20px;
   padding: 0 30px;
   background-color: #fff;

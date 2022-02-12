@@ -1,5 +1,5 @@
 .quiz {
-   flex-grow: 1;
+   flex-grow: 10;
    margin: 0 $main-spacing-x / 2;
    padding: 0 ($main-spacing-x * 0.75);
    background-color: $white-color;
@@ -43,12 +43,6 @@
    }
 
    .quiz__answer-box {
-      .quiz__answer-form {}
-
-      .quiz__answer-list {
-   
-      }
-
       .quiz__answer-item {
          position: relative;
          display: flex;
