@@ -99,6 +99,7 @@ const fillElements = (data) => {
    answerEls.forEach((answerEl, index) => {
       answerEl.textContent = data.answers[index];
    });
+   gameQuiz.scrollTop = -1000;
 }
 
 //funkcja, która obsługuje zdarzenia po wygranej
@@ -106,6 +107,7 @@ const handleWinner = (data) => {
    areHelpBtnsBlocked = true;
    gameQuiz.style.display = 'none';
    winQuiz.style.display = 'flex';
+   winQuiz.scrollTop = -1000;
 }
 
 //funkcja, która obsługuje zdarzenia po przegranej
@@ -115,6 +117,7 @@ const handleLoser = (data) => {
 
    lostNumberEl.textContent = `${data.goodAnswers}/${data.amountOfQuestions}`
    lostQuiz.style.display = 'flex';
+   lostQuiz.scrollTop = -1000;
 }
 
 //funkcja, która strzela do serwera prosząc o question, aswers data oraz info o ewentualnej wygranej lub przegranej
