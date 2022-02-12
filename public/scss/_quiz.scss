@@ -74,17 +74,11 @@
             flex-grow: 1;
          }
 
-         // .quiz__friend-icon {
-         //    padding: 0 5px 0 25px;
-         //    font-size: 2.4rem;
-         //    color: $second-color;
-         // }
          .quiz__bar {
             display: none;
             position: absolute;
             bottom: 0;
             left: 0;
-            // width: 30%;
             height: 5px;
             transition: background-color .3s ease-in-out;
             background-color: $second-color;
@@ -132,7 +126,6 @@
 }
 
 .quiz--win {
-   // display: flex;
    display: none;
    flex-direction: column;
    text-align: center;
@@ -153,7 +146,6 @@
 
 .quiz--lose {
    display: none;
-   // display: flex;
    text-align: center;
 
    .quiz__box {
