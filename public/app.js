@@ -15,6 +15,7 @@ const fiftyFiftyBtn = document.querySelector('.aside__btn--fifty');
 const friendIcon = document.querySelector('.aside__btn--friend .aside__icon');
 const publicIcon = document.querySelector('.aside__btn--public .aside__icon');
 const fiftyFiftyIcon = document.querySelector('.aside__btn--fifty .aside__icon');
+const barEls = [...document.querySelectorAll('.quiz__answer-item .quiz__bar')];
 
 //fajny getterek i setterek
 let activeAnswer = {
@@ -37,6 +38,7 @@ const removeAnswerBoxElsStyle = (next=false) => {
    const icon = 'fa-circle';
    const phoneIcon = 'fa-mobile-alt';
    const fiftyIcon = 'fa-star-half-alt';
+   const activeBar = 'quiz__bar--white';
 
    answerBoxEls.forEach((boxEl, index) => {
       if(boxEl.classList.contains(activeClass)) {
@@ -54,6 +56,12 @@ const removeAnswerBoxElsStyle = (next=false) => {
          answerIconEls[index].classList.remove(activeIcon);
          answerIconEls[index].classList.add(icon);
       }
+      if(barEls[index].classList.contains(activeBar)) {
+         barEls[index].classList.remove(activeBar);
+      }
+      if(next) {
+         barEls[index].style.display = 'none';
+      }
    })
 }
 
@@ -66,6 +74,7 @@ const styleClickedAnswer = () => {
          const icon = 'fa-circle';
          const phoneIcon = 'fa-mobile-alt';
          const fiftyIcon = 'fa-star-half-alt';
+         const activeBar = 'quiz__bar--white';
          
          removeAnswerBoxElsStyle();
 
@@ -75,6 +84,7 @@ const styleClickedAnswer = () => {
             answerIconEls[index].classList.remove(icon);
             answerIconEls[index].classList.add(activeIcon);
          }
+         barEls[index].classList.add(activeBar);
 
          //aktualizuje zmienną activeAnswer.index
          activeAnswer.indexValue = index;
@@ -112,7 +122,6 @@ const showNextQuestion = () => {
    fetch('/question', {method: 'GET'})
       .then(response => response.json())
       .then(data => {
-         console.log(data);
          if(data.winner === true)
             handleWinner(data);
          else if(data.loser === true)
@@ -151,6 +160,9 @@ const handleSumbitBtn = () => {
 const resetGame = () => {
    if(friendIcon.classList.contains('aside__icon--used')) {
       friendIcon.classList.remove('aside__icon--used');
+   }
+   if(publicIcon.classList.contains('aside__icon--used')) {
+      publicIcon.classList.remove('aside__icon--used');
    }
    if(fiftyFiftyIcon.classList.contains('aside__icon--used')) {
       fiftyFiftyIcon.classList.remove('aside__icon--used');
@@ -199,7 +211,18 @@ const handleFriendFedback = (data) => {
 
 //funkcja, która obsługuje odpowiedź publiczności  od serwera
 const handlePublicFedback = (data) => {
+   if(!data.votes) {
+      return;
+   }
+   isHelpUsed = true;
 
+   barEls.forEach((bar, index) => {
+      bar.style.display = 'block';
+      document.documentElement.style.setProperty(`--bar-width-${index}`, `${data.votes[index]}%`);
+      bar.style.animationPlayState = 'running';
+   });
+
+   publicIcon.classList.add('aside__icon--used');
 }
 
 //funkcja, która obsługuje odpowiedź fifty-fifty od serwera
@@ -233,7 +256,6 @@ const askFriend = () => {
    fetch('/help/friend', {method: 'GET'})
       .then(response => response.json())
       .then(data => {
-         console.log(data)
          handleFriendFedback(data);
       })
 }
@@ -245,7 +267,6 @@ const askPublic = () => {
    fetch('/help/public', {method: 'GET'})
       .then(response => response.json())
       .then(data => {
-         console.log(data)
          handlePublicFedback(data);
       })
 }
@@ -257,7 +278,6 @@ const fiftyFifty = () => {
    fetch('/help/fifty', {method: 'GET'})
       .then(response => response.json())
       .then(data => {
-         console.log(data)
          handleFiftyFedback(data);
       })
 }

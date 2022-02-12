@@ -78,6 +78,7 @@ function gameRoutes(app) {
       })
    });
 
+   //zwracamy informację o odpowiedzi udzielonej przez przyjaciela
    app.get("/help/friend", (req, res) => {
       if(isFriendCalled) {
          return res.json({"text": "Zadzwoniłeś już do przyjaciela..."})
@@ -91,11 +92,12 @@ function gameRoutes(app) {
       res.json({friendAnswer});
    });
 
+   //zwracamy informację o odpowiedzi udzielonej przez publiczność
    app.get("/help/public", (req, res) => {
-      // if(isPublicQuestioned) {
-      //    return res.json({"text": "Zapytałeś już publiczności..."})
-      // }
-      // isPublicQuestioned = true;
+      if(isPublicQuestioned) {
+         return res.json({"text": "Zapytałeś już publiczności..."})
+      }
+      isPublicQuestioned = true;
 
       let votes = [];
       const a = 10;
@@ -110,7 +112,6 @@ function gameRoutes(app) {
       } else if(n === 1) {
          votes.push(100);
       }
-      console.log(votes);
 
       for(let i = votes.length - 1; i > 0; i--) {
          const number = Math.floor(Math.random() * 20 - 10);
@@ -118,17 +119,16 @@ function gameRoutes(app) {
          votes[i] += number;
          votes[i - 1] -= number;
       }
-      console.log(votes);
 
       const question = answersArr[currentQuestion];
       const {correctAnswer} = question;
   
       [votes[n - 1], votes[correctAnswer]] = [votes[correctAnswer], votes[n - 1]]; 
-      console.log(votes);
 
       res.json({votes});
    });
 
+   //zwracamy informację o odpowiedzi fifty-fifty
    app.get("/help/fifty", (req, res) => {
       if(isFiftyFifty) {
          return res.json({"text": "Wykorzystałeś już szansę fifty-fifty..."})

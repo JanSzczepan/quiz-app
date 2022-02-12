@@ -14,6 +14,13 @@ $test-color: rgb(65, 65, 65);
 
 $main-radius: 12px;
 
+:root {
+   --bar-width-0: 0%;
+   --bar-width-1: 0%;
+   --bar-width-2: 0%;
+   --bar-width-3: 0%;
+}
+
 
 %btn {
    border: none;
